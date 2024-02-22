@@ -74,7 +74,7 @@ interface IUser {
   address: string,
   bod: string,
   id_card: string,
-  lasor_code:string
+  lasor_code: string
 }
 
 
@@ -139,7 +139,7 @@ export default function SignUp() {
   };
 
   let userId = "";
-  
+
   const main = async () => {
 
     await liff.init({ liffId: '2002793864-KgEoXmYm' })
@@ -151,8 +151,11 @@ export default function SignUp() {
       setProfileData(profile);
       console.log('profile: ', profile)
       console.log('line_userID: ', userId);
+      const data = {
+        line_uid: userId
+      }
 
-      axios.post(`${url}/line/getUserLine`, { line_uid: profile.userId })
+      axios.post(`${url}/line/getUserLine`, data)
         .then(response => {
           console.log('Response:', response.data);
           setUserData(response.data)
@@ -170,7 +173,7 @@ export default function SignUp() {
 
   useEffect(() => {
     main()
-  },[]);
+  }, []);
 
   if (!isUser) {
     return (
