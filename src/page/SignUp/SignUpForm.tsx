@@ -158,18 +158,19 @@ export default function SignUp() {
 
   }
   useEffect(() => {
-    main();
-    axios.post(`${url}/line/getUserLine`, {line_uid:profileData?.userId})
-      .then(response => {
-        console.log('Response:', response.data);
-        setUserData(response.data)
-        setIsUser(true);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+    if (profileData?.userId) {
+      axios.post(`${url}/line/getUserLine`, { line_uid: profileData.userId })
+        .then(response => {
+          console.log('Response:', response.data);
+          setUserData(response.data)
+          setIsUser(true);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+  }, [profileData?.userId]);
 
-  });
 
   if (!isUser) {
     return (
