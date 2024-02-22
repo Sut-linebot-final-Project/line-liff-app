@@ -151,19 +151,6 @@ export default function SignUp() {
       setProfileData(profile);
       console.log('profile: ', profile)
       console.log('line_userID: ', userId);
-      const data = {
-        line_uid: userId
-      }
-
-      axios.post(`${url}/line/getUserLine`, data)
-        .then(response => {
-          console.log('Response:', response.data);
-          setUserData(response.data)
-          setIsUser(true);
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
 
     } else {
       liff.login()
@@ -172,6 +159,15 @@ export default function SignUp() {
   }
   useEffect(() => {
     main();
+    axios.post(`${url}/line/getUserLine`, {line_uid:profileData?.userId})
+      .then(response => {
+        console.log('Response:', response.data);
+        setUserData(response.data)
+        setIsUser(true);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   }, []);
 
   if (!isUser) {
