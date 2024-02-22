@@ -158,6 +158,7 @@ export default function SignUp() {
 
   }
   useEffect(() => {
+    main();
     if (profileData?.userId) {
       axios.post(`${url}/line/getUserLine`, { line_uid: profileData.userId })
         .then(response => {
