@@ -170,7 +170,7 @@ export default function SignUp() {
 
   useEffect(() => {
     main()
-  });
+  },[]);
 
   if (!isUser) {
     return (
