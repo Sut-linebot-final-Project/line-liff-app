@@ -7,13 +7,11 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { SelectElement, TextFieldElement, useForm } from "react-hook-form-mui";
 import toast from "react-hot-toast";
 // import { useNavigate } from "react-router-dom";
-
+import { RegisterForm, TRegisterForm } from "../../lib/validations/register";
 import liff from "@line/liff";
 import React, { useEffect } from "react";
 import axios from "axios";
 import { url } from "../../service/serviceUrl";
-import { RegisterForm, TRegisterForm } from "../../lib/validations/register";
-
 
 type SelectType = Record<string, string>;
 
@@ -64,30 +62,9 @@ const Theme = createTheme({
     },
   },
 });
-interface IUser {
-  email: string,
-  name_prefix: string,
-  firstname: string,
-  lastname: string,
-  gender: string,
-  phone_number: string,
-  address: string,
-  bod: string,
-  id_card: string,
-  lasor_code: string
-}
-
-
-interface Iporfile {
-  displayName?: string,
-  pictureUrl?: string,
-  userId?: string,
-}
 
 export default function SignUp() {
   const [isUser, setIsUser] = React.useState<boolean>(false);
-  const [profileData, setProfileData] = React.useState<Iporfile>();
-  const [userData, setUserData] = React.useState<IUser>();
   // const navigate = useNavigate();
 
   const { control, handleSubmit } = useForm<RegisterForm>({
@@ -101,7 +78,7 @@ export default function SignUp() {
 
     try {
       // Make an API request to save data
-      const response = await fetch(`${url}/line/createUserLine`, {
+      const response = await fetch('http://localhost:5000/pg/post/user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -139,7 +116,6 @@ export default function SignUp() {
   };
 
   let userId = "";
-
   const main = async () => {
 
     await liff.init({ liffId: '2002793864-KgEoXmYm' })
@@ -148,30 +124,27 @@ export default function SignUp() {
       console.log('login แล้วนะ')
       const profile = await liff.getProfile();
       userId = profile.userId;
-      setProfileData(profile);
       console.log('profile: ', profile)
       console.log('line_userID: ', userId);
-      if (profileData?.userId) {
-        axios.post(`${url}/line/getUserLine`, { line_uid: profileData.userId })
-          .then(response => {
-            console.log('Response:', response.data);
-            setUserData(response.data)
-            setIsUser(true);
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
-      }
+
+      axios.post(`${url}/line/getUserLine`, { line_uid: profile.userId })
+        .then(response => {
+          console.log('Response:', response.data);
+          setIsUser(true);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+
     } else {
       liff.login()
     }
 
   }
+
   useEffect(() => {
-    main();
-
-  }, []);
-
+    main()
+  });
 
   if (!isUser) {
     return (
@@ -304,84 +277,9 @@ export default function SignUp() {
   }
   else {
     return (
-      <ThemeProvider theme={Theme}>
-        <Box bgcolor={"#F5AA8480"}>
-          <Container
-            maxWidth="md"
-            sx={{
-              borderRadius: 10,
-              background: "#fff",
-              height: '100%',
-              boxShadow:
-                "0px 4px 4px 0px rgba(0, 0, 0, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-            }}
-            style={{ padding: 0 }}
-          >
-            <Typography
-              component="h1"
-              variant="h4"
-              align="center"
-              py={2}
-              bgcolor={"#FE7A36"}
-              color={"#fff"}
-              sx={{
-                filter:
-                  "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)) drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
-              }}
-            >
-              ยินดีต้อนรับ
-            </Typography>
-
-            <Box sx={{ p: 4, alignItems: 'center', justifyItems: 'center', textAlign: 'center' }}>
-
-              <Box
-                component="img"
-                sx={{
-                  height: 150,
-                  width: 150,
-                  maxHeight: { xs: 233, md: 167 },
-                  maxWidth: { xs: 350, md: 250 },
-
-                }}
-                alt="The house from the offer."
-                src={profileData?.pictureUrl}
-              />
-              <Typography
-                component="h1"
-                variant="h4"
-                align="center"
-                color={"#000000"}
-              >
-                คุณ {profileData?.displayName}
-              </Typography>
-
-              <Typography
-                component="h4"
-                variant="h6"
-                align="left"
-                color={"#000000"}
-                marginY={5}
-              >
-                ข้อมูลส่วนตัว
-              </Typography>
-
-              <Typography
-
-                marginX={20}
-                align="left"
-                color={"#000000"}
-                marginY={5}
-              >
-                ชื่อ: {userData?.firstname}
-                นามสกุล: {userData?.lastname}
-                ที่อยู่ที่ติดต่อได้:{userData?.address}
-                Email:{userData?.email}
-              </Typography>
-
-            </Box>
-          </Container>
-        </Box>
-      </ThemeProvider>
+      <Box sx={{ textAlign: 'center' }}>
+        <h1> ยินดีต้อนรับ </h1>
+      </Box>
     );
 
   }
