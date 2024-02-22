@@ -151,7 +151,17 @@ export default function SignUp() {
       setProfileData(profile);
       console.log('profile: ', profile)
       console.log('line_userID: ', userId);
-
+      if (profileData?.userId) {
+        axios.post(`${url}/line/getUserLine`, { line_uid: profileData.userId })
+          .then(response => {
+            console.log('Response:', response.data);
+            setUserData(response.data)
+            setIsUser(true);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      }
     } else {
       liff.login()
     }
@@ -159,18 +169,8 @@ export default function SignUp() {
   }
   useEffect(() => {
     main();
-    if (profileData?.userId) {
-      axios.post(`${url}/line/getUserLine`, { line_uid: profileData.userId })
-        .then(response => {
-          console.log('Response:', response.data);
-          setUserData(response.data)
-          setIsUser(true);
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-    }
-  }, [profileData?.userId]);
+
+  }, []);
 
 
   if (!isUser) {
@@ -366,16 +366,18 @@ export default function SignUp() {
               </Typography>
 
               <Typography
-                
-                
+
+                marginX={20}
                 align="left"
                 color={"#000000"}
                 marginY={5}
               >
                 ชื่อ: {userData?.firstname}
                 นามสกุล: {userData?.lastname}
+                ที่อยู่ที่ติดต่อได้:{userData?.address}
+                Email:{userData?.email}
               </Typography>
-             
+
             </Box>
           </Container>
         </Box>
