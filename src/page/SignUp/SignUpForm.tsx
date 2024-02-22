@@ -163,7 +163,7 @@ export default function SignUp() {
         });
 
     } else {
-      // liff.login()
+      liff.login()
     }
 
   }
