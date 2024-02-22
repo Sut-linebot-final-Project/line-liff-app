@@ -364,106 +364,18 @@ export default function SignUp() {
               >
                 ข้อมูลส่วนตัว
               </Typography>
-              <Stack spacing={4}>
-                <TextFieldElement
-                  sx={{ bgcolor: "#fff" }}
-                  disabled
-                  control={control}
-                  name={"email"}
-                  placeholder={"อีเมลล์"}
-                  required
-                  type={"email"}
-                  value={userData?.email}
-                />
-                <SelectElement
-                  sx={{ bgcolor: "#fff" }}
-                  name={"namePrefix"}
-                  label={"คำนำหน้าชื่อ"}
-                  control={control}
-                  options={namePrefixOptions}
-                  required
-                  disabled
-                  value={userData?.name_prefix}
-                />
-                <TextFieldElement
-                  sx={{ bgcolor: "#fff" }}
-                  control={control}
-                  name={"firstName"}
-                  placeholder="ชื่อ"
-                  value={userData?.firstname}
-                  disabled
-                />
-                <TextFieldElement
-                  sx={{ bgcolor: "#fff" }}
-                  control={control}
-                  name={"lastName"}
-                  placeholder="นามสกุล"
-                  required
-                  disabled
-                  value={userData?.lastname}
-                />
-                <SelectElement
-                  sx={{ bgcolor: "#fff" }}
-                  name={"gender"}
-                  label={"เพศ"}
-                  control={control}
-                  options={genderOptions}
-                  required
-                  value={userData?.gender}
-                  disabled
-                />
-                <TextFieldElement
-                  sx={{ bgcolor: "#fff" }}
-                  control={control}
-                  name={"phoneNumber"}
-                  placeholder="หมายเลขโทรศัพท์"
-                  required
-                  disabled
-                  value={userData?.phone_number}
-                />
-                <TextFieldElement
-                  sx={{ bgcolor: "#fff" }}
-                  control={control}
-                  name={"address"}
-                  placeholder="ที่อยู่ที่ติดต่อได้"
-                  multiline
-                  minRows={3}
-                  required
-                  disabled
-                  value={userData?.address}
-                />
-                <TextFieldElement
-                  sx={{ bgcolor: "#fff" }}
-                  control={control}
-                  required
-                  name="dateOfBirth"
-                  placeholder="วันเกิด (วัน/เดือน/ปี)"
-                  type="date"
-                  disabled
-                  value={userData?.bod}
-                />
-                {/* Thai national id card */}
-                <TextFieldElement
-                  sx={{ bgcolor: "#fff" }}
-                  control={control}
-                  name="idCard"
-                  required
-                  placeholder="เลขประจำตัวประชาชน"
-                  validation={{ minLength: 13, maxLength: 13 }}
-                  disabled
-                  value={userData?.id_card}
-                />
-                <TextFieldElement
-                  sx={{ bgcolor: "#fff" }}
-                  control={control}
-                  required
-                  placeholder="เลขหลังบัตรประชาชน"
-                  name="lasorCode"
-                  disabled
-                  value={userData?.lasor_code}
-                />
-                {/* button submit */}
-              </Stack>
+
+              <Typography
+                
+                
+                align="left"
+                color={"#000000"}
+                marginY={5}
+              >
+                ชื่อ: {userData?.firstname}
+                นามสกุล: {userData?.lastname}
+              </Typography>
+             
             </Box>
           </Container>
         </Box>
