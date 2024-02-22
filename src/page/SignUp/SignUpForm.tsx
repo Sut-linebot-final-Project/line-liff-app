@@ -155,24 +155,23 @@ export default function SignUp() {
         line_uid: userId
       }
 
-      axios.post(`${url}/line/getUserLine`, data)
-        .then(response => {
-          console.log('Response:', response.data);
-          setUserData(response.data)
-          setIsUser(true);
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
+      // axios.post(`${url}/line/getUserLine`, data)
+      //   .then(response => {
+      //     console.log('Response:', response.data);
+      //     setUserData(response.data)
+      //     setIsUser(true);
+      //   })
+      //   .catch(error => {
+      //     console.error('Error:', error);
+      //   });
 
     } else {
       liff.login()
     }
 
   }
-
   useEffect(() => {
-    main()
+    main();
   }, []);
 
   if (!isUser) {
