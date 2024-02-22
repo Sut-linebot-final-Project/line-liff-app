@@ -168,7 +168,8 @@ export default function SignUp() {
       .catch(error => {
         console.error('Error:', error);
       });
-  }, []);
+
+  });
 
   if (!isUser) {
     return (
